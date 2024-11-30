@@ -265,7 +265,7 @@ def download_track(
             if not cover_path.is_file():
                 track.download_cover(str(cover_path), cover_size)
                 img = Image.open(cover_path)
-                img.save(cover_path, "jpg")
+                img.save(cover_path, "JPEG")
                 
 
     set_tags(target_path, track, text_lyrics, cover, compatibility_level)
