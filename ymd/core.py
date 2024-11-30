@@ -277,9 +277,10 @@ def to_downloadable_track(
     if quality == 2:
         download_info = get_lossless_info(track)
         codec = download_info.codec
-        url = random.choice(download_info.urls)
-        bitrate = download_info.bitrate
-    else:
+        if codec == "flac":
+            url = random.choice(download_info.urls)
+            bitrate = download_info.bitrate
+    if quality == 1 or (quality == 2 and codec != "flac"):
         download_info = track.get_download_info(get_direct_links=True)
         download_info = [e for e in download_info if e.codec in ("mp3", "aac")]
 
