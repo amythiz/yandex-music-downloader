@@ -156,7 +156,7 @@ def set_tags(
             tag["USLT"] = USLT(encoding=3, text=lyrics)
         if album_cover:
             print(filetype.guess(album_cover).mime)
-            tag["APIC"] = APIC(encoding=3, mime=filetype.guess(album_cover).mime, type=3, data=album_cover)
+            tag["APIC"] = APIC(encoding=3, mime="image/png", type=3, data=album_cover)
 
         tag["WOAF"] = WOAF(
             encoding=3,
