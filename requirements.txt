@@ -1,3 +1,4 @@
 yandex-music
 mutagen
 StrEnum
+filetype
