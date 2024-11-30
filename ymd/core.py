@@ -265,7 +265,6 @@ def download_track(
                     image.save(jpg_buffer, 'JPEG', quality=90)  # Adjust quality (0-100) as needed
                     jpg_binary_data = jpg_buffer.getvalue()
                     cover = covers_cache[album_id] = jpg_binary_data
-                    cover = covers_cache[album_id] = cover_bytes
                     
         else:
             cover_path = target_path.parent / "cover.jpg"
