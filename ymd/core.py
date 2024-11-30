@@ -261,6 +261,8 @@ def download_track(
                 cover_bytes = track.download_cover_bytes(size=cover_size)
                 if album_id:
                     image = Image.open(io.BytesIO(cover_bytes))
+                    if image.mode != 'RGB':
+                        image = image.convert('RGB')
                     jpg_buffer = io.BytesIO()
                     image.save(jpg_buffer, 'JPEG', quality=90)  # Adjust quality (0-100) as needed
                     jpg_binary_data = jpg_buffer.getvalue()
