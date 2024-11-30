@@ -1,3 +1,4 @@
+import filetype
 import datetime as dt
 import random
 import re
@@ -154,7 +155,7 @@ def set_tags(
         if lyrics:
             tag["USLT"] = USLT(encoding=3, text=lyrics)
         if album_cover:
-            tag["APIC"] = APIC(encoding=3, mime="image/jpeg", type=3, data=album_cover)
+            tag["APIC"] = APIC(encoding=3, mime=filetype.guess(album_cover).mime, type=3, data=album_cover)
 
         tag["WOAF"] = WOAF(
             encoding=3,
@@ -183,7 +184,10 @@ def set_tags(
         if lyrics:
             tag["\xa9lyr"] = lyrics
         if album_cover:
-            tag["covr"] = [MP4Cover(album_cover, imageformat=MP4Cover.FORMAT_JPEG)]
+            if filetype.guess(album_cover).mime == "image/png":
+                tag["covr"] = [MP4Cover(album_cover, imageformat=MP4Cover.FORMAT_PNG)]
+            else:
+                tag["covr"] = [MP4Cover(album_cover, imageformat=MP4Cover.FORMAT_JPEG)]
         tag["\xa9cmt"] = track_url
     elif isinstance(tag, FLAC):
         tag["title"] = track_title
@@ -204,7 +208,7 @@ def set_tags(
             pic = Picture()
             pic.type = PictureType.COVER_FRONT
             pic.data = album_cover
-            pic.mime = "image/jpeg"
+            pic.mime = filetype.guess(album_cover).mime
             tag.add_picture(pic)
         tag["comment"] = track_url
     else:
