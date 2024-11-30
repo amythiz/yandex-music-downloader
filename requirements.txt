@@ -1,4 +1,4 @@
 yandex-music
 mutagen
 StrEnum
-filetype
+Pillow
