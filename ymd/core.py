@@ -155,8 +155,8 @@ def set_tags(
 
         if lyrics:
             tag["USLT"] = USLT(encoding=3, text=lyrics)
-        #if album_cover:
-            #tag["APIC"] = APIC(encoding=3, mime="image/jpeg", type=3, data=album_cover)
+        if album_cover:
+            tag["APIC"] = APIC(encoding=3, mime="image/jpeg", type=3, data=album_cover)
 
         tag["WOAF"] = WOAF(
             encoding=3,
@@ -206,7 +206,7 @@ def set_tags(
             pic = Picture()
             pic.type = PictureType.COVER_FRONT
             pic.data = album_cover
-            pic.mime = "image/png" #11111111111111111111111111
+            pic.mime = "image/jpeg"
             tag.add_picture(pic)
         tag["comment"] = track_url
     else:
@@ -260,19 +260,19 @@ def download_track(
             else:
                 cover_bytes = track.download_cover_bytes(size=cover_size)
                 if album_id:
-                    #image = Image.open(io.BytesIO(cover_bytes))
-                    #jpg_buffer = io.BytesIO()
-                    #image.save(jpg_buffer, 'JPEG', quality=90)  # Adjust quality (0-100) as needed
-                    #jpg_binary_data = jpg_buffer.getvalue()
-                    #cover = covers_cache[album_id] = jpg_binary_data
+                    image = Image.open(io.BytesIO(cover_bytes))
+                    jpg_buffer = io.BytesIO()
+                    image.save(jpg_buffer, 'JPEG', quality=90)  # Adjust quality (0-100) as needed
+                    jpg_binary_data = jpg_buffer.getvalue()
+                    cover = covers_cache[album_id] = jpg_binary_data
                     cover = covers_cache[album_id] = cover_bytes
                     
         else:
             cover_path = target_path.parent / "cover.jpg"
             if not cover_path.is_file():
                 track.download_cover(str(cover_path), cover_size)
-                #img = Image.open(cover_path)
-                #img.save(cover_path, "JPEG")
+                img = Image.open(cover_path)
+                img.save(cover_path, "JPEG")
     
     set_tags(target_path, track, text_lyrics, cover, compatibility_level)
     print(cover)
@@ -287,11 +287,12 @@ def to_downloadable_track(
     codec: str
     if quality == 2:
         download_info = get_lossless_info(track)
+        print(download_info)
         codec = download_info.codec
-        if codec == "flac":
-            url = random.choice(download_info.urls)
-            bitrate = download_info.bitrate
-    if quality == 1 or (quality == 2 and codec != "flac"):
+        codec = download_info.codec
+        url = random.choice(download_info.urls)
+        bitrate = download_info.bitrate
+    else:
         download_info = track.get_download_info(get_direct_links=True)
         download_info = [e for e in download_info if e.codec in ("mp3", "aac")]
 
