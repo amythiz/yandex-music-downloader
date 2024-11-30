@@ -264,7 +264,7 @@ def main():
     for track in result_tracks:
         if not track.available:
             print(f"Трек {track.title} не доступен для скачивания")
-            with open("log", 'a') as f:
+            with open("log.txt", 'a') as f:
                 f.write(f"{track.artists[0]} - {track.title}")
             continue
 
