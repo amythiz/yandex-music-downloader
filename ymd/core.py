@@ -206,7 +206,7 @@ def set_tags(
             pic = Picture()
             pic.type = PictureType.COVER_FRONT
             pic.data = album_cover
-            pic.mime = "image/jpeg"
+            pic.mime = "image/png" #11111111111111111111111111
             tag.add_picture(pic)
         tag["comment"] = track_url
     else:
@@ -260,11 +260,12 @@ def download_track(
             else:
                 cover_bytes = track.download_cover_bytes(size=cover_size)
                 if album_id:
-                    image = Image.open(io.BytesIO(cover_bytes))
-                    jpg_buffer = io.BytesIO()
-                    image.save(jpg_buffer, 'JPEG', quality=90)  # Adjust quality (0-100) as needed
-                    jpg_binary_data = jpg_buffer.getvalue()
-                    cover = covers_cache[album_id] = jpg_binary_data
+                    #image = Image.open(io.BytesIO(cover_bytes))
+                    #jpg_buffer = io.BytesIO()
+                    #image.save(jpg_buffer, 'JPEG', quality=90)  # Adjust quality (0-100) as needed
+                    #jpg_binary_data = jpg_buffer.getvalue()
+                    #cover = covers_cache[album_id] = jpg_binary_data
+                    cover = covers_cache[album_id] = cover_bytes
                     
         else:
             cover_path = target_path.parent / "cover.jpg"
