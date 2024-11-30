@@ -259,15 +259,19 @@ def download_track(
             else:
                 cover_bytes = track.download_cover_bytes(size=cover_size)
                 if album_id:
-                    cover = covers_cache[album_id] = cover_bytes
+                    image = Image.open(io.BytesIO(cover_bytes))
+                    jpg_buffer = io.BytesIO()
+                    image.save(jpg_buffer, 'JPEG', quality=90)  # Adjust quality (0-100) as needed
+                    jpg_binary_data = jpg_buffer.getvalue()
+                    cover = covers_cache[album_id] = jpg_binary_data
+                    
         else:
             cover_path = target_path.parent / "cover.jpg"
             if not cover_path.is_file():
                 track.download_cover(str(cover_path), cover_size)
                 #img = Image.open(cover_path)
                 #img.save(cover_path, "JPEG")
-                
-
+    
     set_tags(target_path, track, text_lyrics, cover, compatibility_level)
     print(cover)
 
