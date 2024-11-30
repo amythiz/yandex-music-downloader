@@ -264,6 +264,8 @@ def main():
     for track in result_tracks:
         if not track.available:
             print(f"Трек {track.title} не доступен для скачивания")
+            with open("log", 'a') as file1:
+                file1.write(f"https://music.yandex.ru/album/{track.albums[0].id}/track/{track.id}")
             continue
 
         save_path = args.dir / core.prepare_base_path(
