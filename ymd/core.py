@@ -275,7 +275,6 @@ def download_track(
                 img.save(cover_path, "JPEG")
     
     set_tags(target_path, track, text_lyrics, cover, compatibility_level)
-    print(cover)
 
 
 def to_downloadable_track(
