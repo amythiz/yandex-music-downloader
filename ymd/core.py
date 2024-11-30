@@ -1,3 +1,4 @@
+from PIL import Image
 import datetime as dt
 import random
 import re
@@ -263,6 +264,9 @@ def download_track(
             cover_path = target_path.parent / "cover.jpg"
             if not cover_path.is_file():
                 track.download_cover(str(cover_path), cover_size)
+                img = Image.open(cover_path)
+                img.save(cover_path, "jpg")
+                
 
     set_tags(target_path, track, text_lyrics, cover, compatibility_level)
 
