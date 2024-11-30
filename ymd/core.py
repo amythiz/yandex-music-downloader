@@ -285,7 +285,6 @@ def to_downloadable_track(
     codec: str
     if quality == 2:
         download_info = get_lossless_info(track)
-        print(download_info)
         codec = download_info.codec
         codec = download_info.codec
         url = random.choice(download_info.urls)
