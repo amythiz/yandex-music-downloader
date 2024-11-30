@@ -155,8 +155,8 @@ def set_tags(
 
         if lyrics:
             tag["USLT"] = USLT(encoding=3, text=lyrics)
-        if album_cover:
-            tag["APIC"] = APIC(encoding=3, mime="image/jpeg", type=3, data=album_cover)
+        #if album_cover:
+            #tag["APIC"] = APIC(encoding=3, mime="image/jpeg", type=3, data=album_cover)
 
         tag["WOAF"] = WOAF(
             encoding=3,
