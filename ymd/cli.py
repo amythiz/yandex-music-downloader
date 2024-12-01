@@ -262,7 +262,7 @@ def main():
                         break
                 except Exception as e:
                     print(e)
-                    print(f"============retrying {i}================")
+                    print(f"============retrying================")
                     time.sleep(5)
                        
         result_tracks = playlist_tracks_gen()
