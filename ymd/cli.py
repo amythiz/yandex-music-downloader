@@ -262,38 +262,36 @@ def main():
 
     covers_cache: dict[int, bytes] = {}
     for track in result_tracks:
-        try:
-            i = 0
-            while True:
-                print(123)
-                if not track.available:
-                    print(f"Трек {track.title} не доступен для скачивания")
-                    with open("log.txt", 'a') as f:
-                        f.write(f"{track.artists[0].name} - {track.title}\n")
-                    continue
-        
-                save_path = args.dir / core.prepare_base_path(
-                    args.path_pattern,
-                    track,
-                    args.unsafe_path,
-                )
-                if args.skip_existing:
-                    if any(
-                        Path(str(save_path) + s).is_file() for s in core.AUDIO_FILE_SUFFIXES
-                    ):
-                        continue
-        
-                save_dir = save_path.parent
-                if not save_dir.is_dir():
-                    save_dir.mkdir(parents=True)
-        
-                downloadable = core.to_downloadable_track(track, args.quality, save_path)
-                bitrate = downloadable.bitrate
-                format_info = "[" + downloadable.codec.upper()
-                if bitrate > 0:
-                    format_info += f" {bitrate}kbps"
-                format_info += "]"
-                print(f"{format_info} Загружается {downloadable.path}")
+        if not track.available:
+            print(f"Трек {track.title} не доступен для скачивания")
+            continue
+
+        save_path = args.dir / core.prepare_base_path(
+            args.path_pattern,
+            track,
+            args.unsafe_path,
+        )
+        if args.skip_existing:
+            if any(
+                Path(str(save_path) + s).is_file() for s in core.AUDIO_FILE_SUFFIXES
+            ):
+                continue
+
+        save_dir = save_path.parent
+        if not save_dir.is_dir():
+            save_dir.mkdir(parents=True)
+
+        downloadable = core.to_downloadable_track(track, args.quality, save_path)
+        bitrate = downloadable.bitrate
+        format_info = "[" + downloadable.codec.upper()
+        if bitrate > 0:
+            format_info += f" {bitrate}kbps"
+        format_info += "]"
+        print(f"{format_info} Загружается {downloadable.path}")
+
+        i = 0
+        while True:
+            try:
                 core.download_track(
                     track_info=downloadable,
                     lyrics_format=args.lyrics_format,
@@ -302,12 +300,12 @@ def main():
                     covers_cache=covers_cache,
                     compatibility_level=args.compatibility_level,
                 )
-                break
-        except Exception as e:
-            i += 1
-            print(e)
-            print(f"============retrying {i}================")
-            time.sleep(5)
+             except Exception as e:
+                i += 1
+                print(e)
+                print(f"============retrying {i}================")
+                time.sleep(5)
+            break
         
         if args.delay > 0:
             time.sleep(args.delay)
