@@ -300,12 +300,13 @@ def main():
                     covers_cache=covers_cache,
                     compatibility_level=args.compatibility_level,
                 )
-             except Exception as e:
+            except Exception as e:
                 i += 1
                 print(e)
                 print(f"============retrying {i}================")
                 time.sleep(5)
-            break
+                
+        break
         
         if args.delay > 0:
             time.sleep(args.delay)
