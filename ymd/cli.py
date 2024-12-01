@@ -265,6 +265,7 @@ def main():
         try:
             i = 0
             while True:
+                print(123)
                 if not track.available:
                     print(f"Трек {track.title} не доступен для скачивания")
                     with open("log.txt", 'a') as f:
