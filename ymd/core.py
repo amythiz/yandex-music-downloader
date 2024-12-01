@@ -294,7 +294,15 @@ def to_downloadable_track(
     bitrate: int
     codec: str
     if quality == 2:
-        download_info = get_lossless_info(track)
+
+    while True:
+        try:
+            download_info = get_lossless_info(track)
+            break
+        except Exception as e:
+            print(e)
+            time.sleep(5)
+        
         codec = download_info.codec
         codec = download_info.codec
         url = random.choice(download_info.urls)
