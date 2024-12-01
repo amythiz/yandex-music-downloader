@@ -1,6 +1,7 @@
 try:
     while True:
         from PIL import Image
+        import time
         import io
         import datetime as dt
         import random
@@ -334,3 +335,5 @@ try:
         break
 except Exception as e:
     print(e)
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    time.sleep(5)
