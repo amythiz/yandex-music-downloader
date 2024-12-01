@@ -256,18 +256,8 @@ def main():
         def playlist_tracks_gen() -> Generator[Track]:
             tracks = playlist.fetch_tracks()
             for track in tracks:
-                i = 0
-                while True:
-                    try:
-                        yield track.fetch_track()
-                        break
-                    except Exception as e:
-                        i += 1
-                        print(e)
-                        print(f"============retrying {i}================")
-                        time.sleep(5)
-                
-
+                yield track.fetch_track()
+                       
         result_tracks = playlist_tracks_gen()
 
     covers_cache: dict[int, bytes] = {}
