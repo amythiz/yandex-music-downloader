@@ -1,3 +1,4 @@
+import time
 from PIL import Image
 import io
 import datetime as dt
@@ -232,7 +233,14 @@ def download_track(
     assert client
     album = track.albums[0]
 
-    client.request.download(track_info.url, str(target_path))
+    while True:
+        try:
+            client.request.download(track_info.url, str(target_path))
+            break
+        except Exception as e:
+            print(e)
+            time.sleep(5)
+        
 
     text_lyrics = None
     if lyrics_format != LyricsFormat.NONE and (lyrics_info := track.lyrics_info):
