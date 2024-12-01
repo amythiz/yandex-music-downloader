@@ -295,13 +295,13 @@ def to_downloadable_track(
     codec: str
     if quality == 2:
 
-    while True:
-        try:
-            download_info = get_lossless_info(track)
-            break
-        except Exception as e:
-            print(e)
-            time.sleep(5)
+        while True:
+            try:
+                download_info = get_lossless_info(track)
+                break
+            except Exception as e:
+                print(e)
+                time.sleep(5)
         
         codec = download_info.codec
         codec = download_info.codec
