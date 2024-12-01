@@ -288,25 +288,13 @@ def main():
             format_info += f" {bitrate}kbps"
         format_info += "]"
         print(f"{format_info} Загружается {downloadable.path}")
-
-        i = 0
-        while True:
-            try:
-                core.download_track(
-                    track_info=downloadable,
-                    lyrics_format=args.lyrics_format,
-                    embed_cover=args.embed_cover,
-                    cover_resolution=args.cover_resolution,
-                    covers_cache=covers_cache,
-                    compatibility_level=args.compatibility_level,
-                )
-            except Exception as e:
-                i += 1
-                print(e)
-                print(f"============retrying {i}================")
-                time.sleep(5)
-                
-        break
-        
+        core.download_track(
+            track_info=downloadable,
+            lyrics_format=args.lyrics_format,
+            embed_cover=args.embed_cover,
+            cover_resolution=args.cover_resolution,
+            covers_cache=covers_cache,
+            compatibility_level=args.compatibility_level,
+        )
         if args.delay > 0:
             time.sleep(args.delay)
