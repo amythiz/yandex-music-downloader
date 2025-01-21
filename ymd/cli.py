@@ -272,7 +272,7 @@ def main():
         if not track.available:
             print(f"Трек {track.title} не доступен для скачивания")
             with open("log.txt", "a") as f:
-                f.write(f"{track.artists[0].name} - {track.title}")
+                f.write(f"{track.artists[0].name} - {track.title}\n")
             continue
 
         save_path = args.dir / core.prepare_base_path(
